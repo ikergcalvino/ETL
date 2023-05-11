@@ -18,6 +18,12 @@ SET row_security = off;
 
 SET default_table_access_method = heap;
 
+DROP TABLE IF EXISTS public.sesion;
+DROP TABLE IF EXISTS public.piscina;
+DROP TABLE IF EXISTS public.cliente;
+DROP TABLE IF EXISTS public.monitor;
+DROP TABLE IF EXISTS public.actividade;
+
 --
 -- Name: actividade; Type: TABLE; Schema: public; Owner: -
 --
@@ -176,7 +182,7 @@ ALTER TABLE ONLY public.sesion
 --
 
 ALTER TABLE ONLY public.piscina
-    ADD CONSTRAINT piscina_monitor_fk FOREIGN KEY (monitor) REFERENCES public.monitor(nif) NOT VALID;
+    ADD CONSTRAINT piscina_monitor_fk FOREIGN KEY (monitor) REFERENCES public.monitor(nif);
 
 
 --
@@ -184,7 +190,7 @@ ALTER TABLE ONLY public.piscina
 --
 
 ALTER TABLE ONLY public.sesion
-    ADD CONSTRAINT sesion_actividade_fk FOREIGN KEY (actividade) REFERENCES public.actividade(nome) NOT VALID;
+    ADD CONSTRAINT sesion_actividade_fk FOREIGN KEY (actividade) REFERENCES public.actividade(nome);
 
 
 --
@@ -192,7 +198,7 @@ ALTER TABLE ONLY public.sesion
 --
 
 ALTER TABLE ONLY public.sesion
-    ADD CONSTRAINT sesion_cliente_fk FOREIGN KEY (cliente) REFERENCES public.cliente(dni) NOT VALID;
+    ADD CONSTRAINT sesion_cliente_fk FOREIGN KEY (cliente) REFERENCES public.cliente(dni);
 
 
 --
@@ -200,7 +206,7 @@ ALTER TABLE ONLY public.sesion
 --
 
 ALTER TABLE ONLY public.sesion
-    ADD CONSTRAINT sesion_monitor_fk FOREIGN KEY (monitor) REFERENCES public.monitor(nif) NOT VALID;
+    ADD CONSTRAINT sesion_monitor_fk FOREIGN KEY (monitor) REFERENCES public.monitor(nif);
 
 
 --
@@ -208,7 +214,7 @@ ALTER TABLE ONLY public.sesion
 --
 
 ALTER TABLE ONLY public.sesion
-    ADD CONSTRAINT sesion_piscina_fk FOREIGN KEY (piscina) REFERENCES public.piscina(nome) NOT VALID;
+    ADD CONSTRAINT sesion_piscina_fk FOREIGN KEY (piscina) REFERENCES public.piscina(nome);
 
 
 --
