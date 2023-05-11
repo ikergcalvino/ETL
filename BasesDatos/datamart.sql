@@ -18,6 +18,11 @@ SET row_security = off;
 
 SET default_table_access_method = heap;
 
+DROP TABLE IF EXISTS public.dim_cliente;
+DROP TABLE IF EXISTS public.dim_data;
+DROP TABLE IF EXISTS public.dim_piscina;
+DROP TABLE IF EXISTS public.fact_sesion;
+
 --
 -- Name: dim_cliente; Type: TABLE; Schema: public; Owner: -
 --
@@ -36,10 +41,8 @@ CREATE TABLE public.dim_cliente (
 
 CREATE TABLE public.dim_data (
     iddata numeric(6,0) NOT NULL,
-    dia numeric(2,0) NOT NULL,
     mes numeric(2,0) NOT NULL,
-    ano numeric(4,0) NOT NULL,
-    hora numeric(2,0) NOT NULL
+    ano numeric(4,0) NOT NULL
 );
 
 
@@ -79,11 +82,11 @@ CREATE TABLE public.fact_sesion (
 -- Data for Name: dim_data; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (1, 10, 5, 2023, 8);
-INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (2, 10, 5, 2023, 9);
-INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (3, 10, 5, 2023, 10);
-INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (4, 10, 5, 2023, 11);
-INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (5, 10, 5, 2023, 12);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (1, 1, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (2, 2, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (3, 3, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (4, 4, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (5, 5, 2022);
 
 
 --
@@ -99,19 +102,19 @@ INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (5, 10, 5, 2023
 
 
 --
--- Name: dim_cliente cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: dim_cliente dim_cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_cliente
-    ADD CONSTRAINT cliente_pkey PRIMARY KEY (idcliente);
+    ADD CONSTRAINT dim_cliente_pkey PRIMARY KEY (idcliente);
 
 
 --
--- Name: dim_data data_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: dim_data dim_data_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_data
-    ADD CONSTRAINT data_pkey PRIMARY KEY (iddata);
+    ADD CONSTRAINT dim_data_pkey PRIMARY KEY (iddata);
 
 
 --
@@ -123,11 +126,11 @@ ALTER TABLE ONLY public.fact_sesion
 
 
 --
--- Name: dim_piscina piscina_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: dim_piscina dim_piscina_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dim_piscina
-    ADD CONSTRAINT piscina_pkey PRIMARY KEY (idpiscina);
+    ADD CONSTRAINT dim_piscina_pkey PRIMARY KEY (idpiscina);
 
 
 --
