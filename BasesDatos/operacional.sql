@@ -58,7 +58,7 @@ CREATE TABLE public.cliente_auditoria (
     sexo character varying(1),
     telefono character varying(10),
     cambio character varying(3),
-    ult_mod date
+    ultmod date
 );
 
 
@@ -93,7 +93,7 @@ CREATE TABLE public.piscina_auditoria (
     aforo numeric(3,0),
     monitor character varying(10) NOT NULL,
     cambio character varying(3),
-    ult_mod date
+    ultmod date
 );
 
 
