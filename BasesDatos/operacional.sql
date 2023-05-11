@@ -20,7 +20,9 @@ SET default_table_access_method = heap;
 
 DROP TABLE IF EXISTS public.sesion;
 DROP TABLE IF EXISTS public.piscina;
+DROP TABLE IF EXISTS public.piscina_auditoria;
 DROP TABLE IF EXISTS public.cliente;
+DROP TABLE IF EXISTS public.cliente_auditoria;
 DROP TABLE IF EXISTS public.monitor;
 DROP TABLE IF EXISTS public.actividade;
 
@@ -47,6 +49,20 @@ CREATE TABLE public.cliente (
 
 
 --
+-- Name: cliente_auditoria; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cliente_auditoria (
+    dni character varying(10) NOT NULL,
+    nome character varying(25) NOT NULL,
+    sexo character varying(1),
+    telefono character varying(10),
+    cambio character varying(3),
+    "timestamp" time without time zone
+);
+
+
+--
 -- Name: monitor; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -65,6 +81,19 @@ CREATE TABLE public.piscina (
     nome character varying(25) NOT NULL,
     aforo numeric(3,0),
     monitor character varying(10) NOT NULL
+);
+
+
+--
+-- Name: piscina_auditoria; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.piscina_auditoria (
+    nome character varying(25) NOT NULL,
+    aforo numeric(3,0),
+    monitor character varying(10) NOT NULL,
+    cambio character varying(3),
+    "timestamp" time without time zone
 );
 
 
@@ -105,6 +134,17 @@ INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jo
 
 
 --
+-- Data for Name: cliente_auditoria; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('987654321B', 'María García', 'F', '987654321');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('234567890C', 'Pedro González', 'M', '234567890');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL);
+
+
+--
 -- Data for Name: monitor; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -127,6 +167,17 @@ INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Competici�
 
 
 --
+-- Data for Name: piscina_auditoria; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina Olímpica', 100, '123456789A');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina Infantil', 50, '987654321B');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina de Saltos', 20, '234567890C');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina de Hidroterapia', 30, '234567890C');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina de Competición', 200, '123456789A');
+
+
+--
 -- Data for Name: sesion; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -146,6 +197,14 @@ ALTER TABLE ONLY public.actividade
 
 
 --
+-- Name: cliente_auditoria cliente_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cliente_auditoria
+    ADD CONSTRAINT cliente_auditoria_pkey PRIMARY KEY (dni);
+
+
+--
 -- Name: cliente cliente_pkey1; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -159,6 +218,14 @@ ALTER TABLE ONLY public.cliente
 
 ALTER TABLE ONLY public.monitor
     ADD CONSTRAINT monitor_pkey PRIMARY KEY (nif);
+
+
+--
+-- Name: piscina_auditoria piscina_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.piscina_auditoria
+    ADD CONSTRAINT piscina_auditoria_pkey PRIMARY KEY (nome);
 
 
 --
