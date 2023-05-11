@@ -137,11 +137,12 @@ INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jo
 -- Data for Name: cliente_auditoria; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('987654321B', 'María García', 'F', '987654321');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('234567890C', 'Pedro González', 'M', '234567890');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL);
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789', 'ins', '2022-01-01');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('987654321B', 'Mar García', 'F', '987654321', 'ins', '2022-01-01');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('987654321B', 'María García', 'F', '987654321', 'mod', '2022-02-01');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('234567890C', 'Pedro González', 'M', '234567890', 'ins', '2022-01-01');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901', 'ins', '2022-01-01');
+INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL, 'ins', '2022-01-01');
 
 
 --
@@ -170,11 +171,12 @@ INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Competici�
 -- Data for Name: piscina_auditoria; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina Olímpica', 100, '123456789A');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina Infantil', 50, '987654321B');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina de Saltos', 20, '234567890C');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina de Hidroterapia', 30, '234567890C');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor) VALUES ('Piscina de Competición', 200, '123456789A');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina Olímpica', 100, '123456789A', 'ins', '2022-01-01');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina Infantil', 50, '987654321B', 'ins', '2022-01-01');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina pra saltar', 20, '234567890C', 'ins', '2022-01-01');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina de Saltos', 20, '234567890C', 'mod', '2022-01-02');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina de Hidroterapia', 30, '234567890C', 'ins', '2022-01-01');
+INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina de Competición', 200, '123456789A', 'ins', '2022-01-01');
 
 
 --
@@ -197,14 +199,6 @@ ALTER TABLE ONLY public.actividade
 
 
 --
--- Name: cliente_auditoria cliente_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cliente_auditoria
-    ADD CONSTRAINT cliente_auditoria_pkey PRIMARY KEY (dni);
-
-
---
 -- Name: cliente cliente_pkey1; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -218,14 +212,6 @@ ALTER TABLE ONLY public.cliente
 
 ALTER TABLE ONLY public.monitor
     ADD CONSTRAINT monitor_pkey PRIMARY KEY (nif);
-
-
---
--- Name: piscina_auditoria piscina_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.piscina_auditoria
-    ADD CONSTRAINT piscina_auditoria_pkey PRIMARY KEY (nome);
 
 
 --
