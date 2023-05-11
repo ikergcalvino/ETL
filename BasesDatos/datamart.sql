@@ -79,6 +79,11 @@ CREATE TABLE public.fact_sesion (
 -- Data for Name: dim_data; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (1, 10, 5, 2023, 8);
+INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (2, 10, 5, 2023, 9);
+INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (3, 10, 5, 2023, 10);
+INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (4, 10, 5, 2023, 11);
+INSERT INTO public.dim_data (iddata, dia, mes, ano, hora) VALUES (5, 10, 5, 2023, 12);
 
 
 --

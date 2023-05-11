@@ -23,8 +23,8 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.actividade (
-    nome character varying(25) NOT NULL,
-    descripcion character varying(50)
+    nome character varying(50) NOT NULL,
+    descripcion character varying(100)
 );
 
 
@@ -70,7 +70,7 @@ CREATE TABLE public.sesion (
     codsesion numeric(6,0) NOT NULL,
     datahora timestamp without time zone,
     cliente character varying(10) NOT NULL,
-    actividade character varying(25) NOT NULL,
+    actividade character varying(50) NOT NULL,
     piscina character varying(25) NOT NULL,
     monitor character varying(10) NOT NULL
 );
@@ -80,30 +80,55 @@ CREATE TABLE public.sesion (
 -- Data for Name: actividade; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Natación Libre', 'Actividad para nadadores experimentados.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Aquagym', 'Actividad para tonificar y mejorar la forma física.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Clases de Natación Infantil', 'Actividad para niños que deseen aprender a nadar.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Clases de Hidroterapia', 'Actividad terapéutica en el agua.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Waterpolo', 'Actividad deportiva acuática en equipo.');
 
 
 --
 -- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('987654321B', 'María García', 'F', '987654321');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('234567890C', 'Pedro González', 'M', '234567890');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL);
 
 
 --
 -- Data for Name: monitor; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('123456789A', 'Pedro Pérez', 'Natación');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('987654321B', 'María García', 'Aquagym');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('234567890C', 'Juan González', 'Hidroterapia');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('345678901D', 'Ana Ruiz', 'Waterpolo');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('456789012E', 'Jorge Sánchez', 'Salvamento Acuático');
 
 
 --
 -- Data for Name: piscina; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina Olímpica', 100, '123456789A');
+INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina Infantil', 50, '987654321B');
+INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Saltos', 20, '234567890C');
+INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Hidroterapia', 30, '234567890C');
+INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Competición', 200, '123456789A');
 
 
 --
 -- Data for Name: sesion; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100001, '2023-05-10 08:00:00', '123456789A', 'Natación Libre', 'Piscina Olímpica', '123456789A');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100002, '2023-05-10 09:00:00', '234567890C', 'Clases de Natación Infantil', 'Piscina Infantil', '987654321B');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100003, '2023-05-10 10:00:00', '345678901D', 'Clases de Hidroterapia', 'Piscina de Hidroterapia', '234567890C');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100004, '2023-05-10 11:00:00', '456789012E', 'Aquagym', 'Piscina Olímpica', '987654321B');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100005, '2023-05-10 12:00:00', '987654321B', 'Waterpolo', 'Piscina Olímpica', '123456789A');
 
 
 --
