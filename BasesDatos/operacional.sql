@@ -26,6 +26,50 @@ DROP TABLE IF EXISTS public.cliente_auditoria;
 DROP TABLE IF EXISTS public.monitor;
 DROP TABLE IF EXISTS public.actividade;
 
+DROP FUNCTION IF EXISTS public.cliente_trigger_func();
+DROP FUNCTION IF EXISTS public.piscina_trigger_func();
+
+DROP TRIGGER IF EXISTS cliente_trigger ON public.cliente;
+DROP TRIGGER IF EXISTS piscina_trigger ON public.piscina;
+
+--
+-- Name: cliente_trigger_func(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.cliente_trigger_func() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    if (tg_op = 'UPDATE') then
+        insert into public.cliente_auditoria select NEW.*, 'mod', CURRENT_DATE;
+        return NEW;
+    elsif (tg_op = 'INSERT') then
+        insert into public.cliente_auditoria select NEW.*, 'ins', CURRENT_DATE;
+        return NEW;
+    end if;
+END;
+$$;
+
+
+--
+-- Name: piscina_trigger_func(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.piscina_trigger_func() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    if (tg_op = 'UPDATE') then
+        insert into public.piscina_auditoria select NEW.*, 'mod', CURRENT_DATE;
+        return NEW;
+    elsif (tg_op = 'INSERT') then
+        insert into public.piscina_auditoria select NEW.*, 'ins', CURRENT_DATE;
+        return NEW;
+    end if;
+END;
+$$;
+
+
 --
 -- Name: actividade; Type: TABLE; Schema: public; Owner: -
 --
@@ -79,8 +123,8 @@ CREATE TABLE public.monitor (
 
 CREATE TABLE public.piscina (
     nome character varying(25) NOT NULL,
-    aforo numeric(3,0),
-    monitor character varying(10) NOT NULL
+    monitor character varying(10) NOT NULL,
+    mantemento numeric(5,0)
 );
 
 
@@ -90,8 +134,8 @@ CREATE TABLE public.piscina (
 
 CREATE TABLE public.piscina_auditoria (
     nome character varying(25) NOT NULL,
-    aforo numeric(3,0),
     monitor character varying(10) NOT NULL,
+    mantemento numeric(5,0),
     cambio character varying(3),
     ultmod date
 );
@@ -112,85 +156,6 @@ CREATE TABLE public.sesion (
 
 
 --
--- Data for Name: actividade; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.actividade (nome, descripcion) VALUES ('Natación Libre', 'Actividad para nadadores experimentados.');
-INSERT INTO public.actividade (nome, descripcion) VALUES ('Aquagym', 'Actividad para tonificar y mejorar la forma física.');
-INSERT INTO public.actividade (nome, descripcion) VALUES ('Clases de Natación Infantil', 'Actividad para niños que deseen aprender a nadar.');
-INSERT INTO public.actividade (nome, descripcion) VALUES ('Clases de Hidroterapia', 'Actividad terapéutica en el agua.');
-INSERT INTO public.actividade (nome, descripcion) VALUES ('Waterpolo', 'Actividad deportiva acuática en equipo.');
-
-
---
--- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789');
-INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('987654321B', 'María García', 'F', '987654321');
-INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('234567890C', 'Pedro González', 'M', '234567890');
-INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901');
-INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL);
-
-
---
--- Data for Name: cliente_auditoria; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789', 'ins', '2022-01-01');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('987654321B', 'Mar García', 'F', '987654321', 'ins', '2022-01-01');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('987654321B', 'María García', 'F', '987654321', 'mod', '2022-02-01');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('234567890C', 'Pedro González', 'M', '234567890', 'ins', '2022-01-01');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901', 'ins', '2022-01-01');
-INSERT INTO public.cliente_auditoria (dni, nome, sexo, telefono, cambio, ultmod) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL, 'ins', '2022-01-01');
-
-
---
--- Data for Name: monitor; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('123456789A', 'Pedro Pérez', 'Natación');
-INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('987654321B', 'María García', 'Aquagym');
-INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('234567890C', 'Juan González', 'Hidroterapia');
-INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('345678901D', 'Ana Ruiz', 'Waterpolo');
-INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('456789012E', 'Jorge Sánchez', 'Salvamento Acuático');
-
-
---
--- Data for Name: piscina; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina Olímpica', 100, '123456789A');
-INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina Infantil', 50, '987654321B');
-INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Saltos', 20, '234567890C');
-INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Hidroterapia', 30, '234567890C');
-INSERT INTO public.piscina (nome, aforo, monitor) VALUES ('Piscina de Competición', 200, '123456789A');
-
-
---
--- Data for Name: piscina_auditoria; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina Olímpica', 100, '123456789A', 'ins', '2022-01-01');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina Infantil', 50, '987654321B', 'ins', '2022-01-01');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina pra saltar', 20, '234567890C', 'ins', '2022-01-01');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina de Saltos', 20, '234567890C', 'mod', '2022-01-02');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina de Hidroterapia', 30, '234567890C', 'ins', '2022-01-01');
-INSERT INTO public.piscina_auditoria (nome, aforo, monitor, cambio, ultmod) VALUES ('Piscina de Competición', 200, '123456789A', 'ins', '2022-01-01');
-
-
---
--- Data for Name: sesion; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100001, '2022-01-01', '123456789A', 'Natación Libre', 'Piscina Olímpica', '123456789A');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100002, '2022-02-01', '234567890C', 'Clases de Natación Infantil', 'Piscina Infantil', '987654321B');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100003, '2022-03-01', '345678901D', 'Clases de Hidroterapia', 'Piscina de Hidroterapia', '234567890C');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100004, '2022-04-01', '456789012E', 'Aquagym', 'Piscina Olímpica', '987654321B');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100005, '2022-05-01', '987654321B', 'Waterpolo', 'Piscina Olímpica', '123456789A');
-
-
---
 -- Name: actividade actividade_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -199,11 +164,11 @@ ALTER TABLE ONLY public.actividade
 
 
 --
--- Name: cliente cliente_pkey1; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: cliente cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.cliente
-    ADD CONSTRAINT cliente_pkey1 PRIMARY KEY (dni);
+    ADD CONSTRAINT cliente_pkey PRIMARY KEY (dni);
 
 
 --
@@ -215,11 +180,11 @@ ALTER TABLE ONLY public.monitor
 
 
 --
--- Name: piscina piscina_pkey1; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: piscina piscina_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.piscina
-    ADD CONSTRAINT piscina_pkey1 PRIMARY KEY (nome);
+    ADD CONSTRAINT piscina_pkey PRIMARY KEY (nome);
 
 
 --
@@ -268,6 +233,75 @@ ALTER TABLE ONLY public.sesion
 
 ALTER TABLE ONLY public.sesion
     ADD CONSTRAINT sesion_piscina_fk FOREIGN KEY (piscina) REFERENCES public.piscina(nome);
+
+
+--
+-- Name: cliente cliente_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER cliente_trigger AFTER INSERT OR UPDATE OF dni, nome, sexo, telefono ON public.cliente FOR EACH ROW EXECUTE FUNCTION public.cliente_trigger_func();
+
+
+--
+-- Name: piscina piscina_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER piscina_trigger AFTER INSERT OR UPDATE OF nome, monitor, mantemento ON public.piscina FOR EACH ROW EXECUTE FUNCTION public.piscina_trigger_func();
+
+
+--
+-- Data for Name: actividade; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Natación Libre', 'Actividad para nadadores experimentados.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Aquagym', 'Actividad para tonificar y mejorar la forma física.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Clases de Natación Infantil', 'Actividad para niños que deseen aprender a nadar.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Clases de Hidroterapia', 'Actividad terapéutica en el agua.');
+INSERT INTO public.actividade (nome, descripcion) VALUES ('Waterpolo', 'Actividad deportiva acuática en equipo.');
+
+
+--
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('123456789A', 'Juan Pérez', 'M', '123456789');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('987654321B', 'María García', 'F', '987654321');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('234567890C', 'Pedro González', 'M', '234567890');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('345678901D', 'Ana Ruiz', 'F', '345678901');
+INSERT INTO public.cliente (dni, nome, sexo, telefono) VALUES ('456789012E', 'Jorge Sánchez', 'M', NULL);
+
+
+--
+-- Data for Name: monitor; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('123456789A', 'Pedro Pérez', 'Natación');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('987654321B', 'María García', 'Aquagym');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('234567890C', 'Juan González', 'Hidroterapia');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('345678901D', 'Ana Ruiz', 'Waterpolo');
+INSERT INTO public.monitor (nif, nome, especialidade) VALUES ('456789012E', 'Jorge Sánchez', 'Salvamento Acuático');
+
+
+--
+-- Data for Name: piscina; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.piscina (nome, monitor, mantemento) VALUES ('Piscina Olímpica', '123456789A', 2000);
+INSERT INTO public.piscina (nome, monitor, mantemento) VALUES ('Piscina Infantil', '987654321B', 500);
+INSERT INTO public.piscina (nome, monitor, mantemento) VALUES ('Piscina de Saltos', '234567890C', 1500);
+INSERT INTO public.piscina (nome, monitor, mantemento) VALUES ('Piscina de Hidroterapia', '234567890C', 1000);
+INSERT INTO public.piscina (nome, monitor, mantemento) VALUES ('Piscina de Competición', '123456789A', 2500);
+
+
+--
+-- Data for Name: sesion; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100001, '2022-01-01', '123456789A', 'Natación Libre', 'Piscina Olímpica', '123456789A');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100002, '2022-02-01', '234567890C', 'Clases de Natación Infantil', 'Piscina Infantil', '987654321B');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100003, '2022-03-01', '345678901D', 'Clases de Hidroterapia', 'Piscina de Hidroterapia', '234567890C');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100004, '2022-04-01', '456789012E', 'Aquagym', 'Piscina Olímpica', '987654321B');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100005, '2022-05-01', '987654321B', 'Waterpolo', 'Piscina Olímpica', '123456789A');
 
 
 --

@@ -19,6 +19,7 @@ SET row_security = off;
 SET default_table_access_method = heap;
 
 DROP TABLE IF EXISTS public.dim_cliente;
+DROP TABLE IF EXISTS public.dim_cliente_scd2;
 DROP TABLE IF EXISTS public.dim_data;
 DROP TABLE IF EXISTS public.dim_piscina;
 DROP TABLE IF EXISTS public.fact_sesion;
@@ -32,6 +33,22 @@ CREATE TABLE public.dim_cliente (
     dni character varying(10) NOT NULL,
     nome character varying(25) NOT NULL,
     sexo character varying(1)
+);
+
+
+--
+-- Name: dim_cliente_scd2; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.dim_cliente_scd2 (
+    idcliente numeric(6,0) NOT NULL,
+    dni character varying(10) NOT NULL,
+    nome character varying(25) NOT NULL,
+    sexo character varying(1),
+    valido_desde timestamp without time zone,
+    valido_ate timestamp without time zone,
+    num_version numeric(3,0),
+    version_actual boolean
 );
 
 
@@ -53,8 +70,9 @@ CREATE TABLE public.dim_data (
 CREATE TABLE public.dim_piscina (
     idpiscina numeric(6,0) NOT NULL,
     nome character varying(25) NOT NULL,
-    aforo numeric(10,0),
-    monitor character varying(25) NOT NULL
+    mantemento numeric(5,0),
+    temperatura numeric(2,0),
+    aforo numeric(10,0)
 );
 
 
@@ -68,7 +86,7 @@ CREATE TABLE public.fact_sesion (
     iddata numeric(6,0) NOT NULL,
     idcliente numeric(6,0) NOT NULL,
     idpiscina numeric(6,0) NOT NULL,
-    prezo numeric(4,0)
+    custo numeric(4,0)
 );
 
 
