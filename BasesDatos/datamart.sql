@@ -30,8 +30,8 @@ DROP TABLE IF EXISTS public.fact_sesion;
 
 CREATE TABLE public.dim_cliente (
     idcliente numeric(6,0) NOT NULL,
-    dni character varying(10) NOT NULL,
-    nome character varying(25) NOT NULL,
+    dni character varying(10),
+    nome character varying(25),
     sexo character varying(1)
 );
 
@@ -42,8 +42,8 @@ CREATE TABLE public.dim_cliente (
 
 CREATE TABLE public.dim_cliente_scd2 (
     idcliente numeric(6,0) NOT NULL,
-    dni character varying(10) NOT NULL,
-    nome character varying(25) NOT NULL,
+    dni character varying(10),
+    nome character varying(25),
     sexo character varying(1),
     valido_desde timestamp without time zone,
     valido_ate timestamp without time zone,
@@ -81,8 +81,6 @@ CREATE TABLE public.dim_piscina (
 --
 
 CREATE TABLE public.fact_sesion (
-    idsesion numeric(6,0) NOT NULL,
-    codsesion numeric(6,0) NOT NULL,
     iddata numeric(6,0) NOT NULL,
     idcliente numeric(6,0) NOT NULL,
     idpiscina numeric(6,0) NOT NULL,
@@ -105,6 +103,26 @@ INSERT INTO public.dim_data (iddata, mes, ano) VALUES (2, 2, 2022);
 INSERT INTO public.dim_data (iddata, mes, ano) VALUES (3, 3, 2022);
 INSERT INTO public.dim_data (iddata, mes, ano) VALUES (4, 4, 2022);
 INSERT INTO public.dim_data (iddata, mes, ano) VALUES (5, 5, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (6, 6, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (7, 7, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (8, 8, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (9, 9, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (10, 10, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (11, 11, 2022);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (12, 12, 2022);
+
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (13, 1, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (14, 2, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (15, 3, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (16, 4, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (17, 5, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (18, 6, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (19, 7, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (20, 8, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (21, 9, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (22, 10, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (23, 11, 2023);
+INSERT INTO public.dim_data (iddata, mes, ano) VALUES (24, 12, 2023);
 
 
 --
@@ -128,6 +146,14 @@ ALTER TABLE ONLY public.dim_cliente
 
 
 --
+-- Name: dim_cliente dim_cliente_scd2_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dim_cliente_scd2
+    ADD CONSTRAINT dim_cliente_scd2_pkey PRIMARY KEY (idcliente);
+
+
+--
 -- Name: dim_data dim_data_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -140,7 +166,7 @@ ALTER TABLE ONLY public.dim_data
 --
 
 ALTER TABLE ONLY public.fact_sesion
-    ADD CONSTRAINT fact_sesion_pkey PRIMARY KEY (idsesion);
+    ADD CONSTRAINT fact_sesion_pkey PRIMARY KEY (iddata, idcliente, idpiscina);
 
 
 --

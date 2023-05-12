@@ -10,7 +10,7 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>diacarga</name>
+        <name>mescarga</name>
         <default_value>'2023-05'</default_value>
         <description/>
       </parameter>
@@ -921,7 +921,7 @@
       <schema_name/>
     </partitioning>
     <connection>db_operacional</connection>
-    <sql>SELECT * FROM public.piscina_auditoria WHERE to_char(ultmod, 'yyyy-mm-dd') = ${diacarga};</sql>
+    <sql>SELECT * FROM public.piscina_auditoria WHERE to_char(ultmod, 'yyyy-mm') = ${mescarga};</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -953,14 +953,14 @@
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>aforo</name>
-        <length>3</length>
-        <precision>0</precision>
+        <name>monitor</name>
+        <length>10</length>
+        <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>aforo</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <comments>monitor</comments>
+        <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -976,14 +976,14 @@
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
+        <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>monitor</name>
-        <length>10</length>
-        <precision>-1</precision>
+        <name>mantemento</name>
+        <length>5</length>
+        <precision>0</precision>
         <origin>Table input</origin>
-        <comments>monitor</comments>
-        <conversion_Mask/>
+        <comments>mantemento</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>

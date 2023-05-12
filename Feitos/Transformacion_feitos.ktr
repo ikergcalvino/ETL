@@ -10,7 +10,7 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>diacarga</name>
+        <name>mescarga</name>
         <default_value>'2023-05'</default_value>
         <description/>
       </parameter>
@@ -580,9 +580,9 @@
     <sql>SELECT s.cliente, s.piscina,
 	to_char(s.datahora, 'yyyy') as ano,
 	to_char(s.datahora, 'mm') as mes,
-	p.mantemento / (SELECT COUNT(*) FROM sesion s2 WHERE s2.piscina = s.piscina) as custo
+	TRUNC(p.mantemento / (SELECT COUNT(*) FROM sesion s2 WHERE s2.piscina = s.piscina)) as custo
 FROM sesion s JOIN piscina p ON s.piscina = p.nome
-WHERE to_char(s.datahora, 'yyyy-mm-dd') = ${diacarga}
+WHERE to_char(s.datahora, 'yyyy-mm') = ${mescarga}
 GROUP BY s.cliente, s.piscina, ano, mes, p.mantemento;
 </sql>
     <limit>0</limit>
@@ -867,7 +867,7 @@ GROUP BY s.cliente, s.piscina, ano, mes, p.mantemento;
         <name>iddata</name>
         <rename>iddata</rename>
         <default/>
-        <type>Number</type>
+        <type>Integer</type>
       </value>
     </lookup>
     <attributes/>

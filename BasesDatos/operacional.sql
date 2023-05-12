@@ -297,11 +297,11 @@ INSERT INTO public.piscina (nome, monitor, mantemento) VALUES ('Piscina de Compe
 -- Data for Name: sesion; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100001, '2022-01-01', '123456789A', 'Natación Libre', 'Piscina Olímpica', '123456789A');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100002, '2022-02-01', '234567890C', 'Clases de Natación Infantil', 'Piscina Infantil', '987654321B');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100003, '2022-03-01', '345678901D', 'Clases de Hidroterapia', 'Piscina de Hidroterapia', '234567890C');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100004, '2022-04-01', '456789012E', 'Aquagym', 'Piscina Olímpica', '987654321B');
-INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100005, '2022-05-01', '987654321B', 'Waterpolo', 'Piscina Olímpica', '123456789A');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100001, '2023-05-01', '123456789A', 'Natación Libre', 'Piscina Olímpica', '123456789A');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100002, '2023-05-02', '234567890C', 'Clases de Natación Infantil', 'Piscina Infantil', '987654321B');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100003, '2023-05-03', '345678901D', 'Clases de Hidroterapia', 'Piscina de Hidroterapia', '234567890C');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100004, '2023-05-04', '456789012E', 'Aquagym', 'Piscina Olímpica', '987654321B');
+INSERT INTO public.sesion (codsesion, datahora, cliente, actividade, piscina, monitor) VALUES (100005, '2023-05-05', '987654321B', 'Waterpolo', 'Piscina Olímpica', '123456789A');
 
 
 --
